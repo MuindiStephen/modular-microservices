@@ -25,25 +25,27 @@ public class OrderService {
     }
 
     public void placeOrder(@RequestBody OrderRequest orderRequest) {
-        Order order = new Order();
-        order.setOrderName(UUID.randomUUID().toString());
-
-         List<OrderItems> orderItemsList = orderRequest.getOrderLineItemsDTOList()
-                 .stream()
-                 .map(this::mapToDTO)
-                 .toList();
-
-         order.setOrderItems(orderItemsList);
 
          // check if there exist products in the inventory service
         // inter service communication
       Inventory[] inventories = restTemplate.getForObject("http://localhost:8082/api/v1/inventory?skuCode=iphone_14", Inventory[].class);
 
-      if (inventories==null) {
-          throw new IllegalStateException("none");
+      if (inventories!=null && inventories.length > 0) {
+          Order order = new Order();
+          order.setOrderName(UUID.randomUUID().toString());
+
+          List<OrderItems> orderItemsList = orderRequest.getOrderLineItemsDTOList()
+                  .stream()
+                  .map(this::mapToDTO)
+                  .toList();
+
+          order.setOrderItems(orderItemsList);
+
+          orderRepository.save(order);
+      } else {
+       throw new IllegalStateException("failed");
       }
 
-       orderRepository.save(order);
     }
 
 
