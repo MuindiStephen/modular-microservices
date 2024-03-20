@@ -2,17 +2,16 @@ package com.stevemd.orderservice.model;
 
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "orders")
+@Entity
 public class Order {
 
     @Id
