@@ -3,7 +3,7 @@ package com.stevemd.orderservice.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 @Data

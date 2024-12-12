@@ -1,31 +1,30 @@
 package com.stevemd.productservice;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
-@Deprecated
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .httpBasic().disable()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/product/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .httpBasic().disable()  // Disable basic authentication (if needed)
+                .csrf().disable()  // Disable CSRF for stateless applications
+                .authorizeHttpRequests()  // Use authorizeHttpRequests instead of authorizeRequests
+                .requestMatchers("/product/**").permitAll()  // Use requestMatchers instead of antMatchers
+                .anyRequest().authenticated()  // Require authentication for all other requests
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);  // Use stateless session management (for JWT or other stateless systems)
 
+        return httpSecurity.build();
     }
 }
