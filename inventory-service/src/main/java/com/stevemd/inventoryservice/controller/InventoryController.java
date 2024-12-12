@@ -1,7 +1,7 @@
 package com.stevemd.inventoryservice.controller;
 
 
-import com.stevemd.inventoryservice.dto.InventoryResponse;
+import com.stevemd.inventoryservice.dto.InventoryResponse2;
 import com.stevemd.inventoryservice.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +21,20 @@ public class InventoryController {
    // http://localhost:8082/api/v1/inventory?skuCode=iphone_13
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<InventoryResponse> isInStock(@RequestParam List<String> skuCode) {
+    public List<InventoryResponse2> isInStock(@RequestParam List<String> skuCode) {
         log.info("Received inventory check request for skuCode: {}", skuCode);
         return inventoryService.isInStock(skuCode);
     }
+
+    // search using path variable
+    /*
+    @GetMapping("/{skuCode}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<InventoryResponse> isInStock(@PathVariable String skuCode) {
+        log.info("Received inventory check request for skuCode: {}", skuCode);
+        return inventoryService.isInStock(skuCode);
+    }
+
+     */
 }
 

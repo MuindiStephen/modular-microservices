@@ -1,4 +1,4 @@
-package com.stevemd.inventoryservice.dto;
+package com.stevemd.orderservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class InventoryResponse {
     private String skuCode;
     private boolean isInStock;
+    private Integer quantity;
 }
