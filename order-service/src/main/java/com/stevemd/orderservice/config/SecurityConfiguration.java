@@ -1,5 +1,6 @@
 package com.stevemd.orderservice.config;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @EnableMethodSecurity
@@ -15,9 +17,15 @@ import org.springframework.web.client.RestTemplate;
 @Deprecated(since = "6.1", forRemoval = true)
 public class SecurityConfiguration {
 
+//    @Bean
+//    public RestTemplate restTemplate() {
+//        return new RestTemplate();
+//    }
+
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+    @LoadBalanced
+    public WebClient.Builder webClient() {
+        return WebClient.builder();
     }
 
     @Bean
