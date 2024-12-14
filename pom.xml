@@ -20,6 +20,7 @@
 		<module>inventory-service</module>
 		<module>service-discovery</module>
 		<module>api-gateway</module>
+		<module>api-gateway</module>
 	</modules>
 	<properties>
 		<java.version>17</java.version>
