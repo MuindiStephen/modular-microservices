@@ -17,6 +17,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "order_name", nullable = false)
     private String orderName;
 
     @OneToMany(cascade = CascadeType.ALL)
